@@ -1,0 +1,10 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+
+if(@ARGV) {
+	print "Array is not empty\n";
+}
+else {
+	print "Array is empty\n";
+}
