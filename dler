@@ -2,9 +2,56 @@
 use strict;
 use warnings;
 
-if(@ARGV) {
-	print "Array is not empty\n";
+
+my ($url,$file)=("","");
+#my $file="";
+my $filename = __FILE__;
+$filename =~ s/\.\///;
+my @options = qw!+-f -h -u!;
+my $hello="Blabla";
+
+if(!(my $pid = `pgrep tor`)) {
+	print "[!] Tor daemon has not been started yet...
+Aborting!!!\n";
+	exit -1;
 }
-else {
-	print "Array is empty\n";
+
+if(@ARGV) {
+	my @m=@ARGV;
+	foreach(@ARGV) {
+		if($_ eq '-f') {
+			shift(@m);
+			$file=shift(@m);
+		}
+		if($_ eq '-u') {
+			shift(@m);
+			$url=shift(@m);
+		}
+		if($_ eq '-h') {
+			&usage();			
+		}
+	}
+}
+
+print "URL: $url\n";
+#if(($file eq "") || ($url eq "")) {
+if($url eq "") {
+	print "[!] File or URL is not defined...\n";
+	&usage();
+	exit;
+}
+
+#else {
+#	&usage();
+#	exit;
+#}
+
+system 'proxychains','youtube-dl','-x','--audio-format=mp3',$url;
+
+sub usage {
+	print "<Usage>: " . $filename . " <Options> [-u|-f|-h]\n
+	\t Options:
+	\t -u: \t Given URL for download request 
+	\t -f: \t Destination filename
+	\t -h: \t Show this page\n";
 }
