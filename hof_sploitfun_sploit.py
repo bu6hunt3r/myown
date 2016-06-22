@@ -1,5 +1,9 @@
 #!/usr/bin/python
 
+'''
+See https://sploitfun.wordpress.com/tag/house-of-force/ for reference
+'''
+
 import socket
 import struct
 from termcolor import cprint, colored
