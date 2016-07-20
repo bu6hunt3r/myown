@@ -1,0 +1,28 @@
+#!/bin/bash
+
+if [[ $# -ge 1 ]]
+then
+
+while [[ $# -ge 1 ]]
+do
+    key="$1"
+    file="$2"
+
+    case $key in
+        -f|--file)
+        shift
+        for i in $(objdump -d $file -M intel |grep "^ " |cut -f2); do echo -n '\x'$i; done; 
+        break
+        ;;
+
+        -h|--help)
+        shift
+        echo $0
+        break
+    esac
+done
+
+else
+    echo "You must set command line option -f for source file"
+    exit -1;
+fi 
