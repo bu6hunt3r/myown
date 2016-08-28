@@ -1,18 +1,20 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-
+use Term::ANSIColor;
 
 my ($url,$file)=("","");
 #my $file="";
 my $filename = __FILE__;
 $filename =~ s/\.\///;
-my @options = qw!+-f -h -u!;
+my @options = qw!+-f -h -u -l!;
 my $hello="Blabla";
-
+my $input="";
+my $fh=0;
 if(!(my $pid = `pgrep tor`)) {
-	print "[!] Tor daemon has not been started yet...
-Aborting!!!\n";
+	print color("bold red");
+	print "[!] Tor daemon has not been started yet...Aborting!!!\n";
+	print color("reset");
 	exit -1;
 }
 
@@ -30,23 +32,51 @@ if(@ARGV) {
 		if($_ eq '-h') {
 			&usage();			
 		}
+		if($_ eq '-l') {
+			shift(@m);
+			$input=shift(@m);
+		}
 	}
 }
 
-print "URL: $url\n";
-#if(($file eq "") || ($url eq "")) {
-if($url eq "") {
-	print "[!] File or URL is not defined...\n";
-	&usage();
-	exit;
+if($input ne "") {
+	print color("bold green");
+	print "[+] Loading list...\n";
+	print color("reset");
+	print color("bold red");
+	open(my $fh,$input) or die("Could not open file '$input' $!\n");
+	print color("reset");
+	while(my $row=<$fh>) {
+		chomp $row;
+		system 'proxychains','youtube-dl','-x','--audio-format=mp3',$row;
+		print color("reset");
+		print "Using URL $row\n";
+	}	
+	print color("bold green");
+	print "[+] Downloading list terminated successfully...\n";
+	print color("reset");
 }
+
+if($input eq "") {
+	print color("reset");
+	print "URL: $url\n";
+	#if(($file eq "") || ($url eq "")) {
+	
+	if($url eq "") {
+		print color("bold red");
+		print "[!] File or URL is not defined...\n";
+		print color("reset");
+		&usage();
+		exit;
+	}
 
 #else {
 #	&usage();
 #	exit;
 #}
 
-system 'proxychains','youtube-dl','-x','--audio-format=mp3',$url;
+	system 'proxychains','youtube-dl','-x','--audio-format=mp3',$url;
+}
 
 sub usage {
 	print "<Usage>: " . $filename . " <Options> [-u|-f|-h]\n
