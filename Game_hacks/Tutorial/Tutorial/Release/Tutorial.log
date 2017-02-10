@@ -1,0 +1,33 @@
+﻿Der Buildvorgang wurde am 10.02.2017 13:28:05 gestartet.
+Projekt "C:\Users\felixkoch\Documents\Visual Studio 2010\Projects\Tutorial\Tutorial\Tutorial.vcxproj" auf Knoten "2", build Ziel(e).
+InitializeBuildStatus:
+  Aktualisieren des Timestamps von "Release\Tutorial.unsuccessfulbuild".
+ClCompile:
+  C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /clr /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _USRDLL /D TUTORIAL_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm- /EHa /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Core.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Data.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Drawing.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Windows.Forms.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.dll" /analyze- /errorReport:prompt Form1.cpp
+  Form1.cpp
+c:\program files (x86)\reference assemblies\microsoft\framework\.netframework\v4.0\system.core.dll : warning C4945: 'ExtensionAttribute' : Das Symbol kann nicht aus 'c:\program files (x86)\reference assemblies\microsoft\framework\.netframework\v4.0\system.core.dll' importiert werden: 'System::Runtime::CompilerServices::ExtensionAttribute' wurde bereits aus einer anderen Assembly 'mscorlib' importiert
+          c:\windows\microsoft.net\framework\v4.0.30319\mscorlib.dll: Siehe Deklaration von 'System::Runtime::CompilerServices::ExtensionAttribute'
+          Der zuerst angezeigte Typ wird verwendet. Ändern Sie die Reihenfolge der importierten Assemblys, um den aktuellen Typ zu verwenden.
+          Diese Diagnose trat beim Importieren von Typ "System.Runtime.CompilerServices.ExtensionAttribute" aus Assembly "System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" auf.
+c:\users\felixkoch\documents\visual studio 2010\projects\tutorial\tutorial\Form1.h(402): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(105): Siehe Deklaration von 'strcpy'
+  Alle Ausgaben sind aktuell.
+CoreResGen:
+  "C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\NETFX 4.0 Tools\resgen.exe" /useSourcePath /r:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Core.dll" /r:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Data.dll" /r:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.dll" /r:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Drawing.dll" /r:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Windows.Forms.dll" /r:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.dll" /compile Form1.resx,Release\Tutorial.Form1.resources
+  Die Ressourcendatei "Form1.resx" wird zu "Release\Tutorial.Form1.resources" verarbeitet.
+Link:
+  C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\felixkoch\Documents\Visual Studio 2010\Projects\Tutorial\Release\Tutorial.dll" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /ASSEMBLYRESOURCE:Release\Tutorial.Form1.resources /MANIFEST /ManifestFile:"Release\Tutorial.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\felixkoch\Documents\Visual Studio 2010\Projects\Tutorial\Release\Tutorial.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\felixkoch\Documents\Visual Studio 2010\Projects\Tutorial\Release\Tutorial.lib" /MACHINE:X86 /DLL Release\Form1.obj
+  Release\MainDLL.obj
+  Code wird generiert.
+  Codegenerierung ist abgeschlossen.
+  Tutorial.vcxproj -> C:\Users\felixkoch\Documents\Visual Studio 2010\Projects\Tutorial\Release\Tutorial.dll
+Manifest:
+  C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Users\felixkoch\Documents\Visual Studio 2010\Projects\Tutorial\Release\Tutorial.dll;#2" /manifest Release\Tutorial.dll.intermediate.manifest
+FinalizeBuildStatus:
+  Die Datei "Release\Tutorial.unsuccessfulbuild" wird gelöscht.
+  Aktualisieren des Timestamps von "Release\Tutorial.lastbuildstate".
+Die Erstellung des Projekts "C:\Users\felixkoch\Documents\Visual Studio 2010\Projects\Tutorial\Tutorial\Tutorial.vcxproj" ist abgeschlossen, build Ziel(e).
+
+Das Erstellen war erfolgreich.
+
+Verstrichene Zeit 00:00:01.77
