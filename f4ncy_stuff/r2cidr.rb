@@ -3,6 +3,15 @@
 require 'netaddr'
 require 'optparse'
 
+Banner=%q{
+        ____      _     _      
+    _ _|___ \ ___(_) __| |_ __ 
+   | '__|__) / __| |/ _` | '__|
+   | |  / __/ (__| | (_| | |   
+   |_| |_____\___|_|\__,_|_|						   
+}
+
+puts Banner
 options={}
 OptionParser.new do |opt|
 	opt.on('--ranges PATH'){|r| options[:ranges]=r}
@@ -17,14 +26,14 @@ i=0
 
 File.readlines(options[:ranges]).each do |line|
 	i+=1
-	puts "Processing #{i}/#{line_count}"
 	range=line.strip.split(/\s*-\s*/)
 	lower=range[0]
 	upper=range[1]
-	puts "upper: #{upper}; lower: #{lower}"
+	print "\r\033[4;31mProcessing\033[0m #{(i/line_count)*100}%\tupper: #{upper}; lower: #{lower}"
+	$stdout.flush
 	ip_net_range = NetAddr.range(lower, upper, :Inclusive => true, :Objectify => true)
 	cidrs = NetAddr.merge(ip_net_range, :Objectify => true)
-	outfile.write("#{cidrs.network}/#{cidrs.netmask}")
+	outfile.write("\n#{cidrs[0]}")
 end
 
 # Todo:
