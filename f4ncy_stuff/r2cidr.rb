@@ -29,7 +29,7 @@ File.readlines(options[:ranges]).each do |line|
 	range=line.strip.split(/\s*-\s*/)
 	lower=range[0]
 	upper=range[1]
-	print "\r\033[4;31mProcessing\033[0m #{(i/line_count)*100}%\tupper: #{upper}; lower: #{lower}"
+	print "\r\033[4;31mProcessing\033[0m #{(i/line_count)*100}%".ljust(20)+"\tupper: #{upper}; lower: #{lower}".ljust(50)
 	$stdout.flush
 	ip_net_range = NetAddr.range(lower, upper, :Inclusive => true, :Objectify => true)
 	cidrs = NetAddr.merge(ip_net_range, :Objectify => true)
