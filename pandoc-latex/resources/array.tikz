@@ -1,0 +1,51 @@
+    \usetikzlibrary{shapes,arrows,shadows, positioning, calc, arrows}
+    
+    \newcommand{\background}[4]{%
+        \begin{pgfonlayer}{background}
+            % Left-top-corner of background rectangle
+            \path (#1.west |- #2.north)+(-0.5,0.5) node (a1) {};
+            % Right-bottom corner of the background rectanle
+            \path (#4.west |- #3.south)+(-0.5,-1) node (a2) {};
+            % Draw the background
+            \path[fill=gray!80,rounded corners, draw=black!50, dashed] (a1) rectangle (a2);
+        \end{pgfonlayer}
+    }
+
+    \tikzset{node distance=3em}
+    % Define the layers to draw the diagram
+    \pgfdeclarelayer{background}
+    \pgfdeclarelayer{foreground}
+    \pgfsetlayers{background,main,foreground}
+    
+    % Define block styles used later
+    
+    \tikzstyle{address}=[draw, fill=blue!20, text width=5em, 
+        text centered, minimum height=2.5em,drop shadow]
+    \tikzstyle{ann} = [above, text width=5em, text centered]
+    \tikzstyle{w} = [address, text width=3em, fill=red!30, 
+        minimum height=3em, rounded corners, drop shadow={color=blue!20}]
+    \tikzstyle{g} = [address, dotted, text width=3em, fill=red!80, 
+        minimum height=3em, rounded corners, drop shadow]
+    \tikzstyle{sc} = [sensor, text width=13em, fill=red!20, 
+        minimum height=10em, rounded corners, drop shadow]
+     
+    % Define distances for bordering
+    \def\blockdist{2.3}
+    \def\edgedist{2.5}
+    
+    \begin{tikzpicture}
+        \node (w1) [w]  {$a_1$};
+        \node (w2) [w, right= of w1] {$a_2$};
+        \node (w3) [w, right= of w2] {$a_3$};
+        \node (w4) [w, right=4.6em of w3]  {$a_n$};
+        \node (d) at ($(w3)!0.5!(w4)$) {\ldots};
+        \node (g) [g, right= of w4]  {$a_{n+1}$};
+
+        \background{w1}{w2}{d}{g}
+        
+        \draw [white, ->,>=stealth] (w1.south) to [out=-90,in=-90] node[below]{$f_1$} (w2.south);
+        \draw [white, ->,>=stealth] (w1.south) to [out=-90,in=-90] node[below]{$f_2$} (w3.south);
+        \draw [white, ->,=>stealth] (w1.south) to [out=-90,in=-90] node[below]{$f_3$}(w4.south);
+        
+        %\path[->] (w1) node{c} (w2);
+    \end{tikzpicture}

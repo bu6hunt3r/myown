@@ -1,0 +1,2 @@
+add rbx, r15
+mov rax, qword ptr [rbx]

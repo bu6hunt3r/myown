@@ -1,0 +1,20 @@
+\tikzstyle{core} = [rectangle, rounded corners, draw = black, thick, text width = 5em, minimum height = 3em, align=center,fill=blue!70]
+\tikzstyle{cache} = [core, align=center]
+
+\begin{tikzpicture}
+    \node [core] (c1) {Core 1};
+    \node [core, right=8em of c1] (c2) {Core 2};
+    \node [cache, below=3em of c1] (l1) {L1\\64 KB};
+    \node [cache, below=3em of c2] (l2) {L1\\64 KB};
+    \node [cache, below=3em of l1] (l3) {L2\\256 KB};
+    \node [cache, below=3em of l2] (l4) {L2\\256 KB};
+    %\node (r1) at ([yshift=2.0em]$(e1)!0.5!(m1)$) {};
+    \node [core, minimum width=20em] (l5) at ([yshift=-6.0em]$(l3)!0.5!(l4)$) {L3 (LLC)\\8 MB};
+
+    \draw[-] (c1.south) -- (l1.north);
+    \draw[-] (c2.south) -- (l2.north);
+    \draw[-] (l2.south) -- (l4.north);
+    \draw[-] (l1.south) -- (l3.north);
+    \draw[-] (l4.south) -- (l4.south|-l5.north);
+    \draw[-] (l3.south) -- (l3.south|-l5.north);
+\end{tikzpicture}

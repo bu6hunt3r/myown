@@ -1,0 +1,10 @@
+[...]
+0x0000000000008c58: pop rbp; pop r12; pop r13; pop r14; ret;                    
+0x0000000000005d90: pop rbp; pop r12; pop r13; ret;                             
+0x00000000000151a0: pop rbp; pop r12; sub rax, rdx; ret;                        
+0x000000000000639e: pop rbp; pop r12; ret;                                      
+0x000000000000971c: pop rbp; pop r14; pop r15; pop rbp; ret;                    
+0x0000000000004ba2: pop rbp; pop r14; pop r15; ret;                             
+0x0000000000008c5c: pop rbp; pop r14; ret;                                      
+0x0000000000005660: pop rbp; ret;  
+[...]

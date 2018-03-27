@@ -1,0 +1,23 @@
+\tikzset{node distance=6em}
+
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfsetlayers{background,main,foreground}
+
+\tikzstyle{state}=[draw, circle, fill=blue!70, drop shadow, text centered, text width=8em]
+
+\begin{tikzpicture}
+    \node (s1) [state] {Strongly not taken};
+    \node (s2) [state, right= of s1] {Weakly not taken};
+    \node (s3) [state, right= of s2] {Weakly taken};
+    \node (s4) [state, right= of s3] {Strongly taken};
+
+    \draw[->,>=stealth] (s1) to [out=45, in=135] node[above,midway]{T} (s2);
+    \draw[->,>=stealth] (s2) to [out=45, in=135] node[above,midway]{T} (s3);
+    \draw[->,>=stealth] (s3) to [out=45, in=135] node[above,midway]{T} (s4);
+    \draw[->,>=stealth] (s4) to [out=225, in=315] node[below,midway]{NT} (s3);
+    \draw[->,>=stealth] (s3) to [out=225, in=315] node[below,midway]{NT} (s2);
+    \draw[->,>=stealth] (s2) to [out=225, in=315] node[below,midway]{NT} (s1);
+    \draw[->,>=stealth] (s1.south west) to [out=225,in=135, bend left=100, above=6em] node[left, midway]{NT} (s1.north west);
+    \draw[->,>=stealth] (s4.south east) to [out=315,in=45, bend right=100, above=6em] node[right, midway]{T} (s4.north east);
+\end{tikzpicture}

@@ -1,0 +1,9 @@
+uint8_t temp = 0; /* Used so compiler won't optimize out victim_function() */
+
+void victim_function(size_t x)
+{
+	if (x < array1_size)
+	{
+		temp &= array2[array1[x] * 512];
+	}
+}

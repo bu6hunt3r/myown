@@ -1,0 +1,73 @@
+%\usetikzlibrary{shapes,arrows,shadows, positioning, calc, arrows}
+\tikzset{node distance=4em}
+\def\blockdist{1.0em}% Define the layers to draw the diagram
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfsetlayers{background,main,foreground}
+
+\tikzstyle{s}=[draw, fill=blue!70, rounded corners, text centered, text width=15em, minimum height=2.5em,drop shadow]
+\tikzstyle{line}=[draw,-latex']
+\begin{tikzpicture}
+    %\draw (-4,-4) grid (4,4);
+    \node (step1) [s] at (0,4) {read \texttt{array1\_size}};
+    % %\node (decision1) [decision, below= of step1] {cache miss?};
+    \node (step3) [s] at (4,2) {read \texttt{array1[x]}};
+    \node (label1) at (5,1.25) {cache hit};
+    \node (step2) [s] at (-4,2) {request DRAM};
+    \node (step4) at (-4,0) {};
+    \node (step5) [s] at (4,0) {read \\\texttt{array2[array1[x]*512]}};
+    \node (label2) at (5,-1.25) {cache miss};
+    \node (step6) [s] at (-4,-2) {\texttt{array1\_size} arrives};
+    \node (step7) at (4,-2) {};
+    \node (step8) [s] at (4,-4) {bad guess $\rightarrow$ rewind};
+    
+
+    \draw[-,dashed] (-6,3) -- node[yshift=-1em]{cache miss}(6,3);
+    \draw[-,dashed] (-6,1) -- (6,1);
+    \draw[-,dashed] (-6,-1) -- (6,-1);
+    \draw[-,dashed] (-6,-3) -- (6,-3);
+
+    \draw[-] (step1.south) -- (0,3.25);
+    \draw[white,fill=white] (0,3.25) circle (.5ex);
+    \draw[-] (0,3.25) -- (-4,3.25);
+    \draw[-] (0,3.25) -- (4,3.25);
+    \draw[-] (4,3.25) -- (step3.north);
+    \draw[-] (-4,3.25) -- (step2.north);
+    \draw[-] (step2.south) -- (step6.north);
+    \draw[-] (step3.south) -- (step5.north);
+    \draw[-,->,>=stealth] (step5.south) -- (step8.north);
+    \draw[-] (step6.south) -- (-4,-4);
+    \draw[-,->,>=stealth] (-4,-4) -- (step8.west);
+
+    \node (invisibleB) at (barycentric cs:step1=1,step2=1,step3=1) {cache miss};
+    % \path let \p1 = (invisibleB) in coordinate (invisibleA) at (\x1-24em,\y1+1em);
+    % \path let \p1 = (invisibleA) in coordinate (invisibleC) at (\x1+48em,\y1);
+    % %\node at (invisibleA) {A};
+    % %\node at (invisibleC) {C};
+    % \draw[-,dashed, yshift=-3em] (invisibleA) -- (invisibleC);
+
+    
+    % \node (step4) [s, below=6em of step3] {nothing};
+    % \node (step5) [s, right=28em of step4] {read \\\texttt{array2[array\_1[x]*512]}};
+    % \node (step6) [s, below=6em of step4] {\texttt{array1\_size} arriving};
+    % \node (step7) [below=6em of step5] {nothing};
+    % \node (step8) [below=6em of step7] {bad guess};
+
+
+    % \path let \p1 = (step3) in coordinate (invisibleD) at (\x1,\y1-4.5em);
+    % \path let \p1 = (step3) in coordinate (invisibleE) at (\x1+43.0em,\y1-4.5em);
+    % \node (D) at (invisibleD) {D};
+    % \node (E) at (invisibleE) {E};
+
+    % % \node (invisibleE) at (barycentric cs:step2=1,step3=1,step4=1,step5=1) {};
+    % % \path let \p1 = (invisibleE) in coordinate (invisibleD) at (\x1-24em,\y1);
+    % % \path let \p1 = (invisibleE) in coordinate (invisibleF) at (\x1+24em,\y1);
+
+    % \draw[-,dashed, yshift=-3em] (invisibleD) -- (invisibleE);
+
+
+    % % \node (step6) [s,below=6em of step5] {\texttt{array1\_size} arriving};
+    % % \node (step7) [right=34em of step6] {nothing};
+
+
+\end{tikzpicture}

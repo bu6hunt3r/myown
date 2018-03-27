@@ -1,0 +1,66 @@
+%\usetikzlibrary{shapes,arrows,shadows, positioning, calc, arrows}
+\tikzset{node distance=1em}
+\def\blockdist{1.0em}% Define the layers to draw the diagram
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfsetlayers{background,main,foreground}
+
+\tikzstyle{fetch}=[draw, fill=blue!70, rounded corners, text width=5em, text centered, minimum height=2.5em,drop shadow]
+\tikzstyle{decode}=[draw, fill=blue!70, rounded corners, text width=5em, text centered, minimum height=2.5em,drop shadow]
+\tikzstyle{mem}=[draw, fill=blue!70, rounded corners, text width=5em, text centered, minimum height=2.5em,drop shadow]
+\tikzstyle{exe}=[draw, fill=blue!70, rounded corners, text width=5em, text centered, minimum height=2.5em,drop shadow]
+\tikzstyle{wb}=[draw, fill=blue!70, rounded corners, text width=5em, text centered, minimum height=2.5em,drop shadow]
+
+\tikzstyle{instr1}=[draw, fill=red, rounded corners, text width=10em, text centered, minimum height=2.5em, minimum width=10em, drop shadow]
+\tikzstyle{instr2}=[draw, fill=blue!70, rounded corners, text width=10em, text centered, minimum height=2.5em, minimum width=10em, drop shadow]
+
+\begin{tikzpicture}
+    \tikzstyle{every node}=[font=\Large]
+    \node (f1) [fetch] {FE};
+    \node (d1) [decode, right= of f1] {DEC};
+    \node (e1) [exe, right= of d1, thick, style={rectangle, draw=red}] {EXE};
+    \node (m1) [mem, right= of e1] {MEM};
+    \node (w1) [wb, right= of m1] {WB};
+
+    \node (f2) [fetch, below= of d1] {FE};
+    \node (d2) [decode, right= of f2] {DEC};
+    \node (e2) [exe, right= of d2] {EXE};
+    \node (m2) [mem, right= of e2] {MEM};
+    \node (w2) [wb, right= of m2] {WB};
+
+    \node (f3) [fetch, below= of d2] {FE};
+    \node (d3) [decode, right= of f3] {DEC};
+    \node (e3) [exe, right= of d3] {EXE};
+    \node (m3) [mem, right= of e3] {MEM};
+    \node (w3) [wb, right= of m3] {WB};
+
+    \node (f4) [fetch, below=6.0em of d3] {FE};
+    \node (d4) [decode, right= of f4] {DEC};
+    \node (e4) [exe, right= of d4] {EXE};
+    \node (m4) [mem, right= of e4] {MEM};
+    \node (w4) [wb, right= of m4] {WB};
+
+    \node (r1) at ([yshift=2.0em]$(e1)!0.5!(m1)$) {};
+    \node (r3) at ([yshift=-19.5em]r1) {};
+
+    \node (t1) [color=red, anchor=west, inner sep=-2em] at ($(d3)!0.5!(f4)$) {condition is calculated only here};
+
+    \draw [-,red, line width=0.1em] (r1) -- (r3);
+
+    \node (cb) [instr1, left=10em of f1] {\textbf{Cond. branch}};
+    \node (c1) [instr2, below= of cb] {$i_1$};
+    \node (c2) [instr2, below= of c1] {$i_2$};
+    \node (c3) [instr2, below=6em of c2] {$i_3$};
+    \node (c4) [instr2, below= of c3] {$i_4$};
+    \node (cd) [below=3em of c2] {\ldots};
+
+    \draw[->,>=stealth] (cb.west) to [out=225, in=-225] node[color=green,left,midway]{taken} (c3.west);
+    \draw[->,>=stealth] (cb.east) to [out=315, in=45] node[color=red,right,midway]{not taken} (c1.east);
+    %\background{f1}{f1}{w4}{w4}
+    
+    \begin{pgfonlayer}{background}
+        \filldraw[rounded corners, join=round,black!60]
+        ([yshift=1.0em,xshift=-1.0em]cb.north -| cb.west) rectangle ([xshift=1.0em,yshift=-1.0em]c4.south -| c4.east);
+    \end{pgfonlayer}
+
+\end{tikzpicture}

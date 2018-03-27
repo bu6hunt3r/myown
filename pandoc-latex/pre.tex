@@ -1,0 +1,252 @@
+\usepackage[utf8]{inputenc}
+
+\usepackage{graphicx}
+\usepackage{chronology}
+\usepackage{tikz}
+
+\definecolor{sLightBlue}{RGB}{52,101,164}
+\definecolor{sBlue}{RGB}{24,80,149}
+\definecolor{sDarkBlue}{RGB}{8,60,127}
+\definecolor{sOrange}{RGB}{224, 135, 21}
+\definecolor{sDarkGray}{RGB}{50,50,50}
+\definecolor{sDarkerGray}{RGB}{28,28,28}
+\definecolor{sLightGray}{RGB}{178,178,178}
+\definecolor{sSyntaxNDKeyword}{RGB}{255,100,255}
+\definecolor{sSyntaxString}{RGB}{100,255,100}
+\definecolor{sSyntaxComment}{RGB}{255,255,128}
+\definecolor{sSyntaxKeyword}{RGB}{72,210,255}
+\definecolor{sNSyntaxKeyword}{RGB}{255,125,255}
+
+\definecolor{pbblue}{HTML}{0A75A8} % color for progress bar and circle
+\makeatletter
+\def\progressbar@progressbar{}      % the progressbar
+\newcount\progressbar@tmpcounta     % auxiliary counter a
+\newcount\progressbar@tmpcountb     % auxiliary counter b
+\newdimen\progressbar@pbht          % progressbar height
+\newdimen\progressbar@pbwd          % progressbar width
+\newdimen\progressbar@rcircle       % radius for circle
+\newdimen\progressbar@tmpdim        % auxiliary dimen
+
+\progressbar@pbwd=\linewidth
+\progressbar@pbht=1pt
+\progressbar@rcircle=2.5pt
+
+% the progressbar
+\def\progressbar@progressbar{%
+
+    \progressbar@tmpcounta=\insertframenumber
+    \progressbar@tmpcountb=\inserttotalframenumber
+    \progressbar@tmpdim=\progressbar@pbwd
+    \multiply\progressbar@tmpdim by \progressbar@tmpcounta
+    \divide\progressbar@tmpdim by \progressbar@tmpcountb
+
+    \begin{tikzpicture}
+        \draw[pbblue!30,line, width=\progressbar@pbht]
+        (0pt, 0pt) -- ++ (\progressbar@pbwd,0pt);
+
+        \filldraw[pbblue!30] %
+            (\the\dimexpr\progressbar@tmpdim-\progressbar@rcircle\relax, .5\progressbar@pbht) circle (\progressbar@rcircle);
+    
+        \node[draw=pbblue!30,text width=3.5em,align=center,inner sep=1pt, text=pbblue!70,anchor=east] at (0,0) {\insertframenumber/\inserttotalframenumber};
+    \end{tikzpicture}%
+ }
+\makeatother
+
+\newcommand{\background}[4]{%
+    \begin{pgfonlayer}{background}
+        % Left-top-corner of background rectangle
+        \path (#1.west |- #2.north) node (a1) {};
+        % Right-bottom corner of the background rectanle
+        
+        %\path (#4.west |- #3.south)+(-0.5,-1) node (a2) {};
+        
+        \path (#3.south |- #4.east) node (a2) {};
+        % Draw the background
+        \path[fill=gray!80,rounded corners, draw=black!50, dashed] ([xshift=-1.0em,yshift=1.0em]a1) rectangle ([xshift=3.0em,yshift=-3.0em]a2);
+    \end{pgfonlayer}
+}
+
+\tikzset{% 
+register/.style={rectangle,draw=white,fill=black},
+    byte/.style={rectangle,draw=white,fill=black},
+    header/.style={rectangle,draw=white,fill=black},
+    important/.style={fill=sOrange},
+    highlighted/.style={fill=sLightBlue},
+    highlighted3/.style={fill=sDarkBlue},
+    highlighted2/.style={fill=sBlue},
+    plevels/.style={rectangle,draw=white,fill=black}, 
+    plevellist/.style={
+        text depth=0.5ex, 
+        text height=1.5ex, 
+        minimum height=1.5, 
+        nodes in empty cells, 
+        matrix of nodes,
+        row sep=-\pgflinewidth,
+        column sep=-\pgflinewidth,
+        nodes={plevels, align=left}, 
+        row 1/.style={nodes={highlighted, align=center}},
+        column 1/.style={font=\ttfamily},
+        column 2/.style={font=\ttfamily}
+    },
+    registerlist2/.style={
+        text depth=0.5ex, 
+        text height=1.5ex, 
+        minimum height=1.5, 
+        nodes in empty cells, 
+        matrix of nodes,
+        row sep=-\pgflinewidth,
+        column sep=-\pgflinewidth,
+        nodes={register, align=left}, 
+        row 1/.style={nodes={highlighted, align=center}}, 
+        column 1/.style={text width=3.5em, font=\ttfamily},
+        column 2/.style={text width=17em, font=\ttfamily},
+        column 3/.style={text width=3.5em, font=\ttfamily}
+    },
+    conditionlist/.style={
+        text depth=0.5ex, 
+        text height=1.5ex, 
+        minimum height=1.5, 
+        matrix of nodes,
+        row sep=-\pgflinewidth,
+        column sep=-\pgflinewidth,
+        nodes={register, align=left}, 
+        row 1/.style={nodes={highlighted, align=center}}, 
+        column 1/.style={text width=3em, font=\ttfamily},
+        column 2/.style={text width=10em, font=\ttfamily},
+        column 3/.style={text width=7.5em, font=\ttfamily}
+    },
+    registerlist/.style={
+        minimum width=5em,
+        matrix of nodes,
+        row sep=-\pgflinewidth,
+        column 1/.style={font=\ttfamily}
+    },
+    headerlist/.style={
+        minimum width=12em, 
+        minimum height=2em,
+        matrix of nodes,
+        row sep=-\pgflinewidth,
+        column 1/.style={font=\ttfamily}
+    },
+    bytes/.style={
+        minimum width=2em,
+        matrix of nodes,
+        nodes={byte},
+        row sep=-\pgflinewidth,
+        column sep=-\pgflinewidth,
+        font=\ttfamily
+    },
+    bytes2/.style={
+        minimum width=1.0em,
+        minimum height=1.0em,
+        matrix of nodes,
+        row sep=-\pgflinewidth,
+        column sep=-\pgflinewidth,
+        font=\ttfamily 
+    }
+}
+\usetikzlibrary{shapes, arrows.meta, decorations.pathreplacing,angles,quotes,matrix,positioning, arrows, calc, shadows}
+\setbeamertemplate{background}
+{\includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio]{resources/logos.png}} 
+
+\setbeamercolor{background canvas}{bg=sDarkerGray, fg=white}
+\setbeamercolor{frametitle}{bg=sDarkerGray, fg=white}
+\setbeamercolor{alerted text}{ fg=sOrange , bg=sDarkerGray }
+
+\setbeamercolor{titlelike}{fg=white}
+\setbeamercolor{author}{fg=white}
+\setbeamercolor{date}{fg=white}
+\setbeamercolor{institute}{fg=white}
+\setbeamercolor{structure}{fg=white}
+\setbeamercolor{progress bar}{fg=sLightBlue}
+\setbeamercolor{progress bar in section page}{bg=sLightGray}
+\setbeamercolor{normal text}{fg=white}
+\setbeamertemplate{itemize items}{\textbullet}
+
+\setmonofont{Source Code Pro}
+
+\usepackage{listings}
+\lstset{
+           basicstyle=\linespread{1.1}\color{white}\scriptsize\ttfamily,
+           keywordstyle=\color{sSyntaxKeyword}\bfseries,
+           ndkeywordstyle=\color{sNSyntaxKeyword}\bfseries,
+           stringstyle=\color{sSyntaxString},
+           commentstyle=\color{sSyntaxComment},
+           %identifierstyle=\color{sSyntaxIdentifier},
+            %showstringspaces=false,
+                                        % Dies ist ein Python-Skript
+            %tabsize=4,                          % etwas kleinere Tabs
+            %extendedchars=true,                 % Sonderzeichen erlauben
+            % Zeilennummern
+            %numberstyle=\scriptsize,            % kleinere Schriftart
+	    frame=single,                       % Rahmen
+            %frame=lr,
+            backgroundcolor=\color{black}, % Hintergrundfarbe
+            breaklines=true,                    % breche "lange Zeilen" um...
+            captionpos=b,
+            %xrightmargin=-29pt,
+            %xleftmargin=-29pt,
+           %  framexleftmargin=60pt,
+           %  framexrightmargin=30pt,
+             numberstyle=\tiny,
+        %framextopmargin=3pt,
+        %framexbottommargin=3pt, 
+        %rulesep=30pt,
+        %frame=tlbr, 
+        %framerule=0pt,
+        %framesep=0pt
+        }
+        \lstdefinestyle{clist}{
+            basicstyle=\scriptsize\fontserif,
+        }
+        \lstdefinelanguage{bash}{
+        keywords={readelf, ropper, cat, hexdump, as, ld, objcopy},
+        ndkeywords={asm, arch, file, No},
+        %backgroundcolor=\color{bash_bg},
+          comment=[l]{\#},
+          morestring=[b]',
+          morestring=[b]"
+        }
+        \lstdefinelanguage{JavaScript}{
+          keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+          ndkeywords={class, export, boolean, throw, implements, import, this},
+          sensitive=false,
+          comment=[l]{//},
+          morecomment=[s]{/*}{*/},
+          morestring=[b]',
+          morestring=[b]"
+        }
+         \lstdefinelanguage{assembly}{
+          keywords={strb, eor, eors,svc, swi, push, add, adc, addgt, addeq, sub, sbc, subs, suble, str, mov,movs,adr, ldr, ldmia, ldmib, str, stmdb, stmda, bl, b, blx, bne, pop, push, bx, it, ite, itte, ittee, gt, eq, movne},
+          ndkeywords={r0,r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12,r13,r14,r15,lr, pc,sp,ip,fp},
+          sensitive=false,
+          comment=[l]{\#},
+          comment=[l]{;},
+          morecomment=[s]{/*}{*/},
+          morestring=[b]',
+          morestring=[b]"
+        }
+        \lstdefinelanguage{radare}{
+          keywords={rax2, rabin2, rasm2, rahash2, r2pm, r2, radare2, rafind2},
+          ndkeywords={i,s,zz,z,X,m,L,a,aa,aaaa,aaa,AA},
+          sensitive=false,
+          comment=[l]{\#},
+          morestring=[b]',
+          morestring=[b]"
+        }
+        \lstdefinestyle{intermezzo}{
+            basicstyle=\small\fontsans,
+            numbers=none,
+            language=bash,
+            backgroundcolor=\color{yellow},
+        }
+\usepackage{booktabs}
+\usepackage{pgfplots}
+\usepackage{color, colortbl}
+\usepgfplotslibrary{dateplot}
+\metroset{progressbar=head}
+
+\title{Spectre Meltdown}
+\date{\today}
+\author{ Felix C. Koch }
+

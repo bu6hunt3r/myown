@@ -1,0 +1,52 @@
+%\tikzset{node distance=3em}
+% Define the layers to draw the diagram
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfsetlayers{background,main,foreground}
+    
+
+% Define distances for bordering
+%\def\blockdist{2.3}
+%\def\edgedist{2.5}
+
+\tikzstyle{instr}=[circle, draw, fill=blue!70, text width=2em, text centered,drop shadow]
+\tikzstyle{bp}=[circle, draw, color=red, text width=1em, text centered]
+\tikzstyle{instr2}=[circle, draw, fill=red, text width=2em, text centered,drop shadow]
+\tikzstyle{level 1}=[sibling distance=20em] 
+\tikzstyle{level 2}=[sibling distance=10em] 
+
+\begin{tikzpicture}[edge from parent/.style={draw,-latex}, level distance=4em, grow=down, descr/.style={color=red,inner sep=0.5em}]
+    \node (i1) [instr2] {1} {
+        child {node [instr] (i2) {2}
+            child {node [instr] (i4) {4}}
+            child {node [instr] (i5) {5}}}
+        child {node [instr2] (i3) {3} 
+            child {node [color=red] (e) {exit}}
+            child {node [instr2] (i6) {6}}
+        }
+    };
+
+    %\path[->] (A) edge[line width=0.742mm] node[ fill=white, anchor=center, pos=0.5,font=\bfseries] {\Huge +} (B);
+    %\node (l1) [above right= of i3] {loop, 2 iter.};
+    \path[color=red,->,>=stealth] (i6) edge [bend right=45] node [descr,fill=black!80] {loop, 2 iter.} (i1);     
+    
+    \node (bpl) [below=3em of i4,color=red] {Predicted lin. part:};
+    \node (bp1) [bp, right=1em of bpl] {1};
+    \node (bp2) [bp, right= of bp1] {3};
+    \node (bp3) [bp, right= of bp2] {6};
+    \node (bp4) [bp, right= of bp3] {1};
+    \node (bp5) [bp, right= of bp4] {3};
+    \node (bp6) [bp, right= of bp5] {6};
+
+    \draw[color=red,->,>=stealth] (bp1) -- (bp2);   
+    \draw[color=red,->,>=stealth] (bp2) -- (bp3);   
+    \draw[color=red,->,>=stealth] (bp3) -- (bp4);   
+    \draw[color=red,->,>=stealth] (bp4) -- (bp5);   
+    \draw[color=red,->,>=stealth] (bp5) -- (bp6);   
+
+    \begin{pgfonlayer}{background}
+        \filldraw[rounded corners, join=round,black!80]
+        ([yshift=-1.0em,xshift=-1.0em]i4.south -| i4.west) rectangle ([xshift=1.0em,yshift=10.0em]i6.north -| i6.east);
+    \end{pgfonlayer}
+
+\end{tikzpicture}

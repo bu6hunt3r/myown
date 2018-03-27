@@ -1,0 +1,12 @@
+Putting 'The Magic Words are Squeamish Ossifrage.' in memory, address 0x55c0a8353f38
+Reading 40 bytes:
+Reading at malicious_x = 0xffffffffffdfeef8...Success:0x54='T' score=79 (second best: 0x05='?' score=37)
+Reading at malicious_x = 0xffffffffffdfeef9...Unclear:0x68='h' score=999 (second best: 0x01='?' score=643)
+Reading at malicious_x = 0xffffffffffdfeefa...Unclear:0x65='e' score=998 (second best: 0x01='?' score=823)
+Reading at malicious_x = 0xffffffffffdfeefb...Unclear:0x20=' ' score=999 (second best: 0x01='?' score=767)
+Reading at malicious_x = 0xffffffffffdfeefc...Unclear:0x4D='M' score=990 (second best: 0x01='?' score=786)
+Reading at malicious_x = 0xffffffffffdfeefd...Unclear:0x61='a' score=999 (second best: 0x01='?' score=826)
+Reading at malicious_x = 0xffffffffffdfeefe...Unclear:0x67='g' score=999 (second best: 0x01='?' score=820)
+Reading at malicious_x = 0xffffffffffdfeeff...Unclear:0x69='i' score=999 (second best: 0x01='?' score=808)
+Reading at malicious_x = 0xffffffffffdfef00...Unclear:0x63='c' score=999 (second best: 0x01='?' score=823)
+[...]
