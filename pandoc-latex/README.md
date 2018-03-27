@@ -1,7 +1,7 @@
 # Creating pdf documents with latex via pandoc and markdown input
 ## Structure
 1. Create a structure in locals fs like the following e.g.:
-
+```
 .
 ├── introduction.md
 ├── introduction.pdf
@@ -10,7 +10,7 @@
 ├── RAW.md
 ├── README.md
 └── resources
-
+```
 ## Creation Process
 
 Makefile should include following lines:
