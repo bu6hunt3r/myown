@@ -1,0 +1,11 @@
+Create new mail dir
+	c (change folder), ? (list), Shift+C (create-mailbox)
+
+Mark multiple messages
+	Alt+t
+
+Mark multiple messages (Pattern matching)
+	Alt+T
+
+Move tagged messages to folder (Bulk operation)
+	;s? (; - Bulk operation, s - Save, ? - Choose folder from list)
