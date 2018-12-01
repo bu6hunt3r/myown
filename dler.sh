@@ -18,7 +18,8 @@ function do_something()
 	else
 		echo "Starting to download from list:"
 		for i in $(grep -vE '(^#.*$|^$)' $1); do
-			youtube-dl -x --audio-format mp3 --no-playlist $i
+			#youtube-dl -x --audio-format mp3 --no-playlist $i
+			youtube-dl --no-playlist $i
 		done
 	fi
 }
