@@ -18,7 +18,7 @@ ftp -n $HOST <<END_SCRIPT
 quote USER $USER
 quote PASS $PASSWD
 binary
-cd transfer/Musik
+cd transfer/Musik/Offenbarung_23
 get $FILE
 quit
 END_SCRIPT
