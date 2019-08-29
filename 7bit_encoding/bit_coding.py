@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+import os
+
+
 def encode(l):
     ret=[]
     for n in reversed(l):
