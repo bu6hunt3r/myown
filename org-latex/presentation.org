@@ -1,0 +1,33 @@
+#+TITLE:      Beamer Presentation
+#+AUTHOR:     bu6hunt3r
+#+DESCRIPTION: 
+#+KEYWORDS: 
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:https://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [bigger]
+
+#+latex_header: \mode<beamer>{\usetheme{metropolis}}
+#+BEAMER_HEADER: \usecolortheme{owl}
+#+BEAMER_HEADER: \useoutertheme{infolines}
+
+* Introduction
+** A simple slide
+This slide consists of some text with a number of bullet points:
+
+- the first, very @important@, point!
+- the previous point shows the use of the special markup which
+  translates to the Beamer specific /alert/ command for highlighting
+  text.
+
+
+The above list could be numbered or any other type of list and may
+include sub-lists.
