@@ -1,5 +1,5 @@
-#+TITLE:      Beamer Presentation
-#+AUTHOR:     bu6hunt3r
+#+TITLE: Pwning a sample MMORPG
+#+AUTHOR: bu6hunt3r
 #+DESCRIPTION: 
 #+KEYWORDS: 
 #+LANGUAGE:  en
@@ -15,19 +15,103 @@
 #+LaTeX_CLASS: beamer
 #+LaTeX_CLASS_OPTIONS: [bigger]
 
+#+LaTeX_HEADER: \newcommand{\progexample}[1]{{\ttfamily\small #1}}
+#+LATEX_HEADER: \usepackage{color}
+#+MACRO: color @@latex:{\color{$1}@@$2@@latex:}@@
+
 #+latex_header: \mode<beamer>{\usetheme{metropolis}}
 #+BEAMER_HEADER: \usecolortheme{owl}
 #+BEAMER_HEADER: \useoutertheme{infolines}
+#+BEAMER_HEADER: \setbeamercolor{background canvas}{bg=black}
 
 * Introduction
-** A simple slide
-This slide consists of some text with a number of bullet points:
+** Facts
+*** WTF is PwnAdventure
+  - *\textbf{Game:}* Pwn Adventure 3
+  - *\textbf{Genre:}* MMORPG - Team Adventure Quest
+  - *\textbf{Developer:}* Vector35 
+  - *\textbf{Game Engine:}* Unity (cross-platform) 
+  - *\textbf{RE complexity:}*  Medium
+    - no obfuscation (packer, stripper, sandbox detection)
+    - no encryption
+    - all-in-one logic 
+* Configuration
+** Client configuration
+*** App Configuration
+Edit \texttt{MasterServer} in \texttt{server.ini}:
+- *\textbf{Linux:}* \footnotesize \texttt{./PwnAdventure3/PwnAdventure3/Content/Server/server.ini}
+Sample config:
+#+begin_src :eval no
+[MasterServer]
+Hostname=pwn3.server
+Port=3333
+#+end_src
 
-- the first, very @important@, point!
-- the previous point shows the use of the special markup which
-  translates to the Beamer specific /alert/ command for highlighting
-  text.
+*** hosts configuration
+*\textbf{Linux:}* 
+\footnotesize
+#+begin_src bash :eval no
+sudo sh -c "echo '10.0.2.15    pwn3.server' >> /etc/hosts"
+#+end_src
 
+* Quests
+** Different tasks
+*** What we'll be talking about
+| *Quest's name*             | *Category*        |
+|----------------------------+-------------------|
+| /Pirate's Treasure/        | Crackme           |
+| /Fire and Ice/             | Binary RE         |
+| /Until the Cows come home/ | Binary Patching   |
+| /Egg Hunter/               | RE Network/Binary |
+| /Unbearable Revenge/       | RE Network        |
+| /Blocky's Revenge/         | Logic Gates       |
 
-The above list could be numbered or any other type of list and may
-include sub-lists.
+* Game's structure
+** Client-server architecture
+*** The Interaction
+**** Server                    :B_ignoreheading:BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+*\textbf{Master game server:}*
+- Login 
+- Team
+- Characters
+- Assign instance 
+*\textbf{Game server:}*
+- Player's location
+- Enemy's location
+**** Client                    :BMCOL:B_example:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+{{{color(green,\textbf{Client})}}}
+- Application
+- Logic 
+- Graphics/View
+
+* Targets
+** Define Targets
+*** The aim \leftarrow Two different approaches
+**** {{{color(green, Top down)}}}
+***** Just play the game to identify valuable instances
+- Items: coins, weapons, spells, etc.
+- State: quest unlocked, being level 42
+- Increase specs damage x10, health +1000, etc.
+- Enhance caps: run faster, jump higher
+
+**** {{{color(red, Bottom up)}}}
+***** Reverse binary to indentify potential weaknesses
+
+* Find local saved data
+** Find local saved data
+***  Lab 1: Find local saved data (Linux)
+**** Find new/deleted files:
+- \ttfamily find / -type f -o -path /proc -prune > snapshot1
+- \ttfamily find / -type f -o -path /proc -prune > snapshot2
+- \ttfamily diff -crB snapshot1 snapshot2 > changes
+**** Find edited/removes files:
+- \ttfamily find / -path /proc -o -path sys -prune -o -path usr
+  -prune -o -type f print0 | xargs -0 md5sum | 
+  tee md5sum.txt  
+
